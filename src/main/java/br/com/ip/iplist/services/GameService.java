@@ -3,6 +3,7 @@ package br.com.ip.iplist.services;
 import br.com.ip.iplist.dto.GameDTO;
 import br.com.ip.iplist.dto.GameReducedDTO;
 import br.com.ip.iplist.entities.Game;
+import br.com.ip.iplist.projections.GameReducedProjection;
 import br.com.ip.iplist.repositories.GameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,13 @@ public class GameService {
     public GameDTO findById(Long id) {
         Game result = gameRepository.findById(id).get();
         return new GameDTO(result);
+    }
+
+    @Transactional(readOnly = true)
+    public List<GameReducedDTO> findByList(Long listId) {
+        List <GameReducedProjection> result = gameRepository.searchByList(listId);
+
+        return result.stream().map(GameReducedDTO::new).toList();
     }
 
     @Transactional(readOnly = true)
