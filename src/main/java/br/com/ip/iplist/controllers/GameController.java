@@ -1,9 +1,11 @@
 package br.com.ip.iplist.controllers;
 
+import br.com.ip.iplist.dto.GameDTO;
 import br.com.ip.iplist.dto.GameReducedDTO;
 import br.com.ip.iplist.services.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,4 +22,10 @@ public class GameController {
     public List<GameReducedDTO> findAll() {
         return gameService.findAll();
     }
+
+    @GetMapping(value = "/{id}")
+    public GameDTO findById(@PathVariable Long id) {
+        return gameService.findById(id);
+    }
+
 }
